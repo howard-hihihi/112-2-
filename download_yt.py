@@ -1,7 +1,7 @@
 from pytube import YouTube
 
 # YouTube 影片的 URL
-video_url = "https://www.youtube.com/watch?v=210R0ozmLwg"
+video_url = "https://www.youtube.com/watch?v=210R0ozmLwg&t=14s"
 
 # 下載影片
 yt = YouTube(video_url)

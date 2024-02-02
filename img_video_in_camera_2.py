@@ -3,7 +3,8 @@ import cv2
 # 做好資料管理
 DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "image"},
              "2": {"path": "images/mikey.jpeg", "display": False, "type": "image"},
-             "a": {"path": "video/MASHLE op2.mp4", "display": False, "type": "video"}}
+             "a": {"path": "video/MASHLE op2.mp4", "display": False, "type": "video"},
+             "b": {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
 
 
 def show_image(cam_frame, image_key, kb):
@@ -32,13 +33,12 @@ def show_image(cam_frame, image_key, kb):
 
 
     # 按下 'q' 關閉照片
-    if kb != ord('q'):
-        cam_frame[cam_h - img_h:cam_h, cam_w - img_w:cam_w] = cv2.addWeighted(roi, alpha, image, beta, 0)
-    elif kb == ord('q'):
+    if kb == ord('q'):
         image_info["display"] = False
         cam_frame[cam_h - img_h:cam_h, cam_w - img_w:cam_w] = roi
         print(f"--close {DATA_DICT[image_key]['path']}--")
-    
+
+    cam_frame[cam_h - img_h:cam_h, cam_w - img_w:cam_w] = cv2.addWeighted(roi, alpha, image, beta, 0)
     return cam_frame
 
 def show_video(cap, video, video_key, kb):
@@ -50,6 +50,11 @@ def show_video(cap, video, video_key, kb):
     while True:
         cam_ret, cam_frame = cap.read()
         vdo_ret, vdo_frame = video.read()
+        if vdo_frame is None:
+            video_info["display"] = False
+            cam_frame[cam_h - vdo_h:cam_h, cam_w - vdo_w:cam_w] = roi
+            print(f"--close {DATA_DICT[video_key]['path']}--")
+            return cam_frame
 
         # 再調整大小
         cam_h, cam_w, _ = cam_frame.shape
@@ -65,14 +70,15 @@ def show_video(cap, video, video_key, kb):
         beta = 1 - alpha
 
         # 按下 'q' 關閉照片
-        if kb != ord('q'):
-            cam_frame[cam_h - vdo_h:cam_h, cam_w - vdo_w:cam_w] = cv2.addWeighted(roi, alpha, vdo_frame, beta, 0)
-        elif kb == ord('q'):
+        if kb == ord('q'):
             video_info["display"] = False
             cam_frame[cam_h - vdo_h:cam_h, cam_w - vdo_w:cam_w] = roi
             print(f"--close {DATA_DICT[video_key]['path']}--")
-            break
+            return cam_frame
         
+        # roi * alpha + vdo_frame * beta + 0
+        cam_frame[cam_h - vdo_h:cam_h, cam_w - vdo_w:cam_w] = cv2.addWeighted(roi, alpha, 
+                                                                              vdo_frame, beta, 0)
         cv2.imshow("Camera", cam_frame)
         kb = cv2.waitKey(1)
 
@@ -114,7 +120,7 @@ if __name__ == "__main__":
                 frame = show_image(frame, data_key, kb)
             elif DATA_DICT[data_key]["display"] and DATA_DICT[data_key]["type"] == "video":
                 video = cv2.VideoCapture(DATA_DICT[data_key]["path"])
-                show_video(cap, video, data_key, kb)
+                frame = show_video(cap, video, data_key, kb)
 
         cv2.imshow("Camera", frame)
         
