@@ -24,6 +24,7 @@ while True:
 
         while True:
             ret_video, frame_video = video.read()
+            ret, frame = cap.read()
             if not ret_video:
                 break
 

@@ -6,11 +6,10 @@ DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "imag
              "a": {"path": "video/MASHLE op2.mp4", "display": False, "type": "video"}}
 
 
-def show_image(cap, image_key, kb):
-    global DATA_DICT, ROI
+def show_image(cam_frame, image_key, kb):
+    global DATA_DICT
     
-    # 取得相機和照片的 "path"、"display"
-    ret, cam_frame = cap.read()
+    # 取得照片的 "path"、"display"
     image_info = DATA_DICT.get(image_key)
 
     # 取得 img , 再調整 img 大小
@@ -18,8 +17,9 @@ def show_image(cap, image_key, kb):
     image = cv2.imread(image_path)
     if image is None:
         print("! Read image fail !")
+    
     cam_h, cam_w, _ = cam_frame.shape
-    img_h, img_w = cam_h // 4, cam_w // 4
+    img_h, img_w = cam_h // 3, cam_w // 3
     image = cv2.resize(image, (img_w, img_h))
 
     # roi(region of interest): img 在 frame 裡面的區域
@@ -39,51 +39,42 @@ def show_image(cap, image_key, kb):
         cam_frame[cam_h - img_h:cam_h, cam_w - img_w:cam_w] = roi
         print(f"--close {DATA_DICT[image_key]['path']}--")
     
-    cv2.imshow("Camera", cam_frame)
+    return cam_frame
 
-def show_video(cap, video_key, kb):
+def show_video(cap, video, video_key, kb):
     global DATA_DICT
 
-    # 取得相機和影片
-    ret, cam_frame = cap.read()
+    # 取得影片資訊
     video_info = DATA_DICT.get(video_key)
 
-    # 取得影像, 再調整大小
-    video_path = video_info["path"]
-    video = cv2.VideoCapture(video_path)
-    ret, vdo_frame = video.read()
-    if not ret:
-        print("! Read video fail !")
+    while True:
+        cam_ret, cam_frame = cap.read()
+        vdo_ret, vdo_frame = video.read()
 
-    cam_h, cam_w, _ = cam_frame.shape
-    vdo_h, vdo_w = cam_h // 4, cam_w // 4
-    vdo_frame = cv2.resize(vdo_frame, (vdo_w, vdo_h))
+        # 再調整大小
+        cam_h, cam_w, _ = cam_frame.shape
+        vdo_h, vdo_w = cam_h // 3, cam_w // 3
+        vdo_frame = cv2.resize(vdo_frame, (vdo_w, vdo_h))
 
-    # roi
-    roi = cam_frame[cam_h - vdo_h: cam_h, cam_w - vdo_w: cam_w]
-    # cv2.imshow("roi", roi)
+        # roi
+        roi = cam_frame[cam_h - vdo_h: cam_h, cam_w - vdo_w: cam_w]
+        # cv2.imshow("roi", roi)
 
-    # img 跟 roi 比例
-    alpha = 0.3
-    beta = 1 - alpha
+        # img 跟 roi 比例
+        alpha = 0.3
+        beta = 1 - alpha
 
-    # 按下 'q' 關閉照片
-    if kb != ord('q'):
-        cam_frame[cam_h - vdo_h:cam_h, cam_w - vdo_w:cam_w] = cv2.addWeighted(roi, alpha, vdo_frame, beta, 0)
-    elif kb == ord('q'):
-        video_info["display"] = False
-        cam_frame[cam_h - cam_h:cam_h, cam_w - vdo_w:cam_w] = roi
-        print(f"--close {DATA_DICT[video_key]['path']}--")
-    
-    cv2.imshow("Camera", cam_frame)
+        # 按下 'q' 關閉照片
+        if kb != ord('q'):
+            cam_frame[cam_h - vdo_h:cam_h, cam_w - vdo_w:cam_w] = cv2.addWeighted(roi, alpha, vdo_frame, beta, 0)
+        elif kb == ord('q'):
+            video_info["display"] = False
+            cam_frame[cam_h - vdo_h:cam_h, cam_w - vdo_w:cam_w] = roi
+            print(f"--close {DATA_DICT[video_key]['path']}--")
+            break
         
-def show_camera(cap):
-    ret, cam_frame = cap.read()
-    if ret:
         cv2.imshow("Camera", cam_frame)
-    else:
-        print("! Can't read camera !")
-
+        kb = cv2.waitKey(1)
 
 def set_data_display(key):
     global DATA_DICT
@@ -98,8 +89,11 @@ def set_data_display(key):
 if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
     cv2.namedWindow('Camera', cv2.WINDOW_NORMAL)
-
+    
+    
     while True:
+        ret, frame = cap.read()
+
         # keyboard(kb), return type: 'int'
         kb = cv2.waitKey(1)
         if kb == ord("\x1b"): break
@@ -117,11 +111,13 @@ if __name__ == "__main__":
 
             # 顯示 True data
             if DATA_DICT[data_key]["display"] and DATA_DICT[data_key]["type"] == "image":
-                show_image(cap, data_key, kb)
+                frame = show_image(frame, data_key, kb)
             elif DATA_DICT[data_key]["display"] and DATA_DICT[data_key]["type"] == "video":
-                show_video(cap, data_key, kb)
-            else:
-                show_camera(cap)
+                video = cv2.VideoCapture(DATA_DICT[data_key]["path"])
+                show_video(cap, video, data_key, kb)
+
+        cv2.imshow("Camera", frame)
+        
 
     cap.release()
     cv2.destroyAllWindows()
