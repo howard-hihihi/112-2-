@@ -15,7 +15,7 @@ if __name__ == "__main__":
         # 4. 預測每一帪
         results = model(frame)
         
-        # 畫出預測的結果
+        # 5. 畫出預測的結果
         annotated_frame = results[0].plot()
 
         cv2.imshow("Camera", annotated_frame)
