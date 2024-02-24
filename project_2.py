@@ -8,7 +8,7 @@ DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False},
              "3": {"path": "images/bon2.png", "display": False},
              "4": {"path": "images/GoingMerry.jpg", "display": False},
              "5": {"path": "images/Sunny.jpg", "display": False},
-             "6": {"path": "images/lufy_5gear.jpg", "display": False}}
+             "6": {"path": "images/Mashle.jpg", "display": False}}
 
 
 def show_image(cam_frame, image_key, kb):
@@ -55,8 +55,10 @@ def set_data_display(key):
         else:
             DATA_DICT[k]["display"] = False
 
-def save_photo(cap, image):
+def save_photo(cap, image_key, kb):
     ret, frame = cap.read()
+
+    # 倒數的數字圖
     one = cv2.imread("images/1.png")
     two = cv2.imread("images/2.png")
     three = cv2.imread("images/3.png")
@@ -66,20 +68,27 @@ def save_photo(cap, image):
     two = cv2.resize(two, (new_w, new_h))
     three = cv2.resize(three, (new_w, new_h))
 
-    for i in range(270):
+
+    for i in range(150):
         ret, frame = cap.read()
+
+        # 倒數圖片的區域
+        roi = frame[10 : new_h + 10, 10 : new_w + 10]
+
+        # 加入圖片的區域
+        if image_key is not None:
+            frame = show_image(frame, image_key, kb)
+
         if i < 50:
-            cv2.imshow("Count", three)
+            frame[10 : new_h + 10, 10 : new_w + 10] = cv2.addWeighted(roi, 0.3, three, 0.7, 0)
             cv2.waitKey(1)
         elif i < 100:
-            cv2.imshow("Count", two)
+            frame[10 : new_h + 10, 10 : new_w + 10] = cv2.addWeighted(roi, 0.3, two, 0.7, 0)
             cv2.waitKey(1)
         elif i < 150:
-            cv2.imshow("Count", one)
+            frame[10 : new_h + 10, 10 : new_w + 10] = cv2.addWeighted(roi, 0.3, one, 0.7, 0)
             cv2.waitKey(1)
         cv2.imshow("Camera", frame)
-
-    cv2.destroyWindow("Count")
 
     # 避免 photo 名稱重複
     j = 1
@@ -89,6 +98,7 @@ def save_photo(cap, image):
         path = f'photos/{str(j)}.jpg'
     
     # 儲存照片
+    frame[10 : new_h + 10, 10 : new_w + 10] = roi
     cv2.imwrite(path, frame)        
 
     return frame
@@ -103,6 +113,7 @@ if __name__ == "__main__":
     
     while True:
         ret, frame = cap.read()
+        image_key = None
 
         # cv2.waitKey() , return type: 'int'
         kb = cv2.waitKey(1)
@@ -123,12 +134,15 @@ if __name__ == "__main__":
                 set_data_display(data_key)
 
             if DATA_DICT[data_key]["display"]:
+                image_key = data_key
                 annotated_frame = show_image(annotated_frame, data_key, kb)
-
+                
         # 67 cell phone
-        for idx in r.boxes.cls:
-            if idx == 67:
-                annotated_frame = save_photo(cap, annotated_frame)
+        for i in range(len(r.boxes.cls)):
+            cls = r.boxes.cls[i]
+            conf = r.boxes.conf[i]
+            if cls == 67 and conf > 0.8:
+                annotated_frame = save_photo(cap, image_key, kb)
 
         cv2.imshow("Camera", annotated_frame)
         
