@@ -100,6 +100,7 @@ def save_photo(cap, image_key, kb):
     now_time = datetime.now()
     time_str = now_time.strftime("%Y-%m-%d %H_%M_%S")
     path = f'photos/{time_str}.jpg'
+    os.makedirs("photos", exist_ok=True)
     
     # 儲存照片
     frame[10 : new_h + 10, 10 : new_w + 10] = roi
