@@ -2,9 +2,9 @@ import cv2
 from ultralytics import YOLO
 
 # 做好資料管理
-DATA_DICT = {"person": {"path": "images/usseewa.jpg", "type": "image"},
+DATA_DICT = {"face": {"path": "images/usseewa.jpg", "type": "image"},
              "cell phone": {"path": "images/mikey.jpeg", "type": "image"},
-             "3": {"path": "images/bon2.png", "type": "image"},
+             "five": {"path": "images/bon2.png", "type": "image"},
              "bottle": {"path": "video/MASHLE op2.mp4", "type": "video"},
              "b": {"path": "video/Gojo field.mp4", "type": "video"}}
 
@@ -90,12 +90,12 @@ def set_all_false():
 if __name__ == "__main__":
     # 1. 載入模型 
     # 2. 建立相機物件
-    model = YOLO('yolov8n.pt')
+    model = YOLO(r'C:\Users\user\Desktop\112-2社課\weights\face_five.pt')
     cap = cv2.VideoCapture(0)
 
     while cap.isOpened():
         # 3. 讀取相機每一帪畫面
-        success, frame = cap.read()
+        ret, frame = cap.read()
 
         # 4. 預測每一帪
         results = model(frame)

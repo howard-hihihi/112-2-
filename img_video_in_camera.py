@@ -5,7 +5,7 @@ DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "imag
              "2": {"path": "images/mikey.jpeg", "display": False, "type": "image"},
              "3": {"path": "images/bon2.png", "display": False, "type": "image"},
              "a": {"path": "video/MASHLE op2.mp4", "display": False, "type": "video"},
-             "b": {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
+             5: {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
 
 
 def show_image(cam_frame, image_key, kb):

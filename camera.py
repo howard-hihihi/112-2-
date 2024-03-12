@@ -5,7 +5,7 @@ from ultralytics import YOLO
 if __name__ == "__main__":
     # 1. 載入模型 
     # 2. 建立相機物件
-    model = YOLO('yolov8n.pt')
+    model = YOLO(r'C:\Users\user\Desktop\112-2社課\weights\face_five.pt')
     cap = cv2.VideoCapture(0)
 
     while cap.isOpened():
