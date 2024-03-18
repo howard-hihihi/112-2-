@@ -18,3 +18,12 @@
   <img src="show_results/img_video_in_camera.png" alt="執行結果" width="50%">
 ## 3. Project 1 、 Project 2
 結合上面兩個做出小專題
+* Project 1 : 讀取某特定物體會顯示某特定圖片，例如 : 讀取到 **"face"** 會顯示 **"usseewa.png"**
+```
+DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "image"},
+             "2": {"path": "images/mikey.jpeg", "display": False, "type": "image"},
+             "3": {"path": "images/bon2.png", "display": False, "type": "image"},
+             "a": {"path": "video/MASHLE op2.mp4", "display": False, "type": "video"},
+             "b": {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
+```
+[![open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/15u6zdQotiOYI7t90LqCZCnFxp5YsJ9ty/view?usp=sharing)
