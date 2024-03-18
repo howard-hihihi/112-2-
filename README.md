@@ -27,4 +27,7 @@ DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "imag
              "b": {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
 ```
 * Project 2 : 相機會讀取人臉，當 **"face"** 和 **"five"** 兩個類別同時被偵測到的時候，螢幕會出現 3 2 1 倒數計時，最後會照相，將結果儲存到資料夾
+## Yolov8 Ultralytics
+* 官網的詳細說明 : https://docs.ultralytics.com/zh/modes/predict/  
+* 這邊有一些範例，因為只使用一些，所以沒有全部的範例
 [![open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/15u6zdQotiOYI7t90LqCZCnFxp5YsJ9ty/view?usp=sharing)
