@@ -26,4 +26,5 @@ DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "imag
              "a": {"path": "video/MASHLE op2.mp4", "display": False, "type": "video"},
              "b": {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
 ```
+* Project 2 : 相機會讀取人臉，當 **"face"** 和 **"five"** 兩個類別同時被偵測到的時候，螢幕會出現 3 2 1 倒數計時，最後會照相，將結果儲存到資料夾
 [![open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/15u6zdQotiOYI7t90LqCZCnFxp5YsJ9ty/view?usp=sharing)
