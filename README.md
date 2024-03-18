@@ -6,5 +6,15 @@
 
 **使用 camera.py 實現**  
 * ```model = YOLO(r'C:\Users\user\Desktop\112-2社課\weights\face_five.pt')``` 這邊改成自己的路徑
-* ![執行結果]([圖片連結](https://github.com/howard-liang-B/112-2-CYCU-Autocontrol/blob/main/show_results/camera/camera_with_yolo.png)https://github.com/howard-liang-B/112-2-CYCU-Autocontrol/blob/main/show_results/camera/camera_with_yolo.png)
-  
+* 執行結果  
+  <img src="show_results/camera.png" alt="執行結果" width="50%">  
+
+## 2. 把圖片加入相機中
+* step 1 : 設定好哪些圖片，和各自的路徑，用鍵盤控制要顯示那些照片和影片
+* step 2 : 建立顯示照片跟影像的函式
+* step 3 : 讀取相機偵測到的照片，並顯示在螢幕上面
+* step 4 : step 3 在讀取照片時，同時讀取鍵盤是否有按下特定按鍵，其中代表了你要加入的圖像或影像
+* 執行結果  
+  <img src="show_results/img_video_in_camera.png" alt="執行結果" width="50%">
+## 3. Project 1 、 Project 2
+結合上面兩個做出小專題
