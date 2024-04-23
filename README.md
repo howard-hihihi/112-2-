@@ -18,3 +18,16 @@
   <img src="show_results/img_video_in_camera.png" alt="執行結果" width="50%">
 ## 3. Project 1 、 Project 2
 結合上面兩個做出小專題
+* Project 1 : 讀取某特定物體會顯示某特定圖片，例如 : 讀取到 **"face"** 會顯示 **"usseewa.png"**
+```
+DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "image"},
+             "2": {"path": "images/mikey.jpeg", "display": False, "type": "image"},
+             "3": {"path": "images/bon2.png", "display": False, "type": "image"},
+             "a": {"path": "video/MASHLE op2.mp4", "display": False, "type": "video"},
+             "b": {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
+```
+* Project 2 : 相機會讀取人臉，當 **"face"** 和 **"five"** 兩個類別同時被偵測到的時候，螢幕會出現 3 2 1 倒數計時，最後會照相，將結果儲存到資料夾
+## Yolov8 Ultralytics
+* 官網的詳細說明 : https://docs.ultralytics.com/zh/modes/predict/  
+* 這邊有一些範例，因為只使用一些，所以沒有全部的範例
+[![open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/15u6zdQotiOYI7t90LqCZCnFxp5YsJ9ty/view?usp=sharing)
