@@ -4,6 +4,9 @@
 * step 2 : 將讀到影像傳送給以訓練好的模型偵測
 * step 3 : 輸出偵測到的物件的 bounding box (bbox) 繪製出來
 
+**camera.py flow chart**  
+  <img src="show_results/camera.png" alt="執行結果" width="50%">  
+
 **使用 camera.py 實現**  
 * ```model = YOLO(r'C:\Users\user\Desktop\112-2社課\weights\face_five.pt')``` 這邊改成自己的路徑
 * 執行結果  
