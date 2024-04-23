@@ -5,12 +5,12 @@
 * step 3 : 輸出偵測到的物件的 bounding box (bbox) 繪製出來
 
 **camera.py flow chart**  
-  <img src="show_results/camera flow chart.png" alt="camera 流程圖" width="50%">  
+  <img src="readme images/camera flow chart.png" alt="camera 流程圖" width="50%">  
 
 **使用 camera.py 實現**  
 * ```model = YOLO(r'C:\Users\user\Desktop\112-2社課\weights\face_five.pt')``` 這邊改成自己的路徑
 * 執行結果  
-  <img src="show_results/camera.png" alt="執行結果" width="50%">  
+  <img src="readme images/camera.png" alt="執行結果" width="50%">  
 
 ## 2. 把圖片加入相機中
 * step 1 : 設定好哪些圖片，和各自的路徑，用鍵盤控制要顯示那些照片和影片
@@ -18,7 +18,7 @@
 * step 3 : 讀取相機偵測到的照片，並顯示在螢幕上面
 * step 4 : step 3 在讀取照片時，同時讀取鍵盤是否有按下特定按鍵，其中代表了你要加入的圖像或影像
 * 執行結果  
-  <img src="show_results/img_video_in_camera.png" alt="執行結果" width="50%">
+  <img src="readme images/img_video_in_camera.png" alt="執行結果" width="50%">
 ## 3. Project 1 、 Project 2
 結合上面兩個做出小專題
 * Project 1 : 讀取某特定物體會顯示某特定圖片，例如 : 讀取到 **"face"** 會顯示 **"usseewa.png"**
