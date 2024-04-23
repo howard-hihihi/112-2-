@@ -17,6 +17,10 @@
 * step 2 : 建立顯示照片跟影像的函式
 * step 3 : 讀取相機偵測到的照片，並顯示在螢幕上面
 * step 4 : step 3 在讀取照片時，同時讀取鍵盤是否有按下特定按鍵，其中代表了你要加入的圖像或影像
+
+**img_video_in_camera.py flow chart**  
+  <img src="readme images/img_video_in_camera flow chart.png" alt="img_video_in_camera 流程圖" width="80%">  
+
 * 執行結果  
   <img src="readme images/img_video_in_camera.png" alt="執行結果" width="50%">
 ## 3. Project 1 、 Project 2
