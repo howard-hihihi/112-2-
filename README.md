@@ -12,7 +12,7 @@
 * 執行結果  
   <img src="readme images/camera.png" alt="執行結果" width="50%">  
 
-## 2. 把圖片加入相機中
+## 2. Put images and video in camera frame
 * **Introduce Variables & Functions**
   * **DATA_DICT** : {"按下的鍵值(ASCII)(key)": {"path": "放入你的影像路徑", "display": False, "type": "image"}, ....}，這個字典儲存了"路徑"、"是否顯示"、"檔案類別"
   * **show_image(cam_frame, image_key, kb)** : 傳入參數有三個，cam_frame 代表相機當下讀取到的那一幀的影像，image_key 代表的是要顯示的影像，對應到我們先前建立的 DATA_DICT 的 key，kb 代表的是當次迴圈讀取到的鍵盤的值，用來檢查是否為 "q" 或 "Esc" 按鍵，"q" 為關閉影像，"Esc" 為跳出迴圈(相機結束讀取)。函式最後會回傳一張加入影像的 frame。
