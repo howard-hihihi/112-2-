@@ -29,7 +29,8 @@
 * 結合上面兩個做出小專題
 * Project 1 : 讀取某特定物體會顯示某特定圖片，例如 : 讀取到 **"face"** 會顯示 **"usseewa.png"**
   * 這邊多了一個函式，**set_data_all_false(s_dict)**，人如其名，就是將所有資料的 display 設定成 False。
-  * 
+  * 模型預測後會回傳一個 Results 物件，這裡面包含了剛剛那一張照片的預測結果資訊，bbox、conf、precision ...
+
 ```
 DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "image"},
              "2": {"path": "images/mikey.jpeg", "display": False, "type": "image"},
