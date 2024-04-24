@@ -110,7 +110,8 @@ if __name__ == "__main__":
         if len(r.boxes.cls) > 0:
             best_conf_obj_id = int(r.boxes.cls[0])
             obj_key = r.names[best_conf_obj_id]
-
+        
+        # 是否加入影像 
         if best_conf_obj_id != None and obj_key in DATA_DICT:
             if DATA_DICT[obj_key]["type"] == "image":
                 annotated_frame = show_image(annotated_frame, obj_key)
