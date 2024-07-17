@@ -1,6 +1,7 @@
 import cv2
 import pytesseract
 import re
+import easyocr
 
 def find_plate_contour(org_img, canny_img):
     contours, hierarchy = cv2.findContours(canny_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -18,6 +19,10 @@ def find_plate_contour(org_img, canny_img):
             break
     return org_img, crop_img, x, y
 
+def find_plate_contour_2(text):
+    for data in text:
+        if data[2] > 0.7:
+            return data
 
 # 1. 讀取圖片，並且轉成使用灰階讀取
 img_path = r"plates\test\images\-2024-02-20-3-35-34_png.rf.7207fad0a58ca511421fa799fe88caa7.jpg"
@@ -36,17 +41,40 @@ canny_plate_img = cv2.Canny(blur_plate_img, 50, 150) # 數字範圍都是 0 ~ 25
 plate_img, crop_img, x, y =  find_plate_contour(plate_img, canny_plate_img)
 
 # 6. 對切割出來的照片進行辨識
-text = pytesseract.image_to_string(crop_img, config='--psm 11')
-text = re.sub(r'[^\w\d]', '', text)
-print("## plate number:", text)
+############################## 使用 pytesseract #####################################
+# text = pytesseract.image_to_string(crop_img, config='--psm 11')
+# text = re.sub(r'[^\w\d]', '', text)
+# print("## plate number:", text)
 
-# 7. 顯示車牌號碼在原圖
-cv2.putText(plate_img, text, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+# # 7. 顯示車牌號碼在原圖
+# cv2.putText(plate_img, text, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
+
+# cv2.imshow("plate", plate_img)
+# # cv2.imshow("blur plate", blur_plate_img)
+# # cv2.imshow("canny plate", canny_plate_img)
+# # cv2.imshow("crop plate", crop_img)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+############################## 使用 easyocr #####################################
+reader = easyocr.Reader(['en'], gpu = True) 
+text = reader.readtext(crop_img)
+print("## ", text)
+'''
+text print 出來長這樣:
+[([[191, 168], [462, 168], [462, 249], [191, 249]], '0 9 &', 0.014731698078101775), 
+([[0, 216], [640, 216], [640, 470], [0, 470]], '9R8027', 0.756721173876858)]
+'''
+
+data = find_plate_contour_2(text)
+[left_top, right_top, right_down, left_down] = data[0]
+cv2.putText(plate_img, data[1], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
 cv2.imshow("plate", plate_img)
-# cv2.imshow("blur plate", blur_plate_img)
-# cv2.imshow("canny plate", canny_plate_img)
-# cv2.imshow("crop plate", crop_img)
+cv2.imshow("crop plate", plate_img[left_top[1]:left_down[1], left_top[0]: right_top[0]])
 cv2.waitKey()
 cv2.destroyAllWindows()
+
+
+###################################################################
