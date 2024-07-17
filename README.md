@@ -39,7 +39,7 @@ DATA_DICT = {"1": {"path": "images/usseewa.jpg", "display": False, "type": "imag
              "b": {"path": "video/Gojo field.mp4", "display": False, "type": "video"}}
 ```
 * Project 2 : 相機會讀取人臉，當 **"face"** 和 **"five"** 兩個類別同時被偵測到的時候，螢幕會出現 3 2 1 倒數計時，最後會照相，將結果儲存到資料夾
-* Project 3.1 : 是利用一些影像處理的套件去實現車牌辨識，但本人操作下來的心得是，要切割正確的車牌位置不太準確，不過 pytesseract 裡面的函式 "image_to_string" 正確率雖然沒有99%，但應該也有70%。  
+* Project 3.1 : 是利用一些影像處理的套件去實現車牌辨識，但本人操作下來的心得是，要切割正確的車牌位置不太準確，不過 pytesseract 裡面的函式 "image_to_string" 正確率雖然沒有99%，但應該也有70%。另外還有一個套件 easyocr 也可以參考使用。  
   **參考資料** :
   1. https://medium.com/jia-hong/%E5%9F%BA%E6%96%BCopencv%E4%B9%8B%E8%BB%8A%E7%89%8C%E8%BE%A8%E8%AD%98-b14ca20b1803
   2. https://lufor129.medium.com/pytesseract-%E8%BE%A8%E8%AD%98%E5%9C%96%E7%89%87%E4%B8%AD%E7%9A%84%E6%96%87%E5%AD%97-b1024f678fac
