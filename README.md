@@ -25,7 +25,7 @@
 
 * 執行結果  
   <img src="readme images/img_video_in_camera.png" alt="執行結果" width="50%">
-## 3. Project 1 、 Project 2
+## 3. Let's make smoe project ~ a ha
 * 結合上面兩個做出小專題
 * Project 1 : 讀取某特定物體會顯示某特定圖片，例如 : 讀取到 **"face"** 會顯示 **"usseewa.png"**
   * 這邊多了一個函式，**set_data_all_false(s_dict)**，人如其名，就是將所有資料的 display 設定成 False。
