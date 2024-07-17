@@ -15,10 +15,10 @@ def show_imgs(img):
 
 
 # 1. 讀取圖像
-plate_img = cv2.imread("images/street.jpg")
+plate_img = cv2.imread("images/TOYOTA.jpg")
 height, width, _ = plate_img.shape # 獲取圖像的寬度和高度
-new_width = width // 3
-new_height = height // 3
+new_width = width
+new_height = height
 plate_img = cv2.resize(plate_img, (new_width, new_height)) # 調整圖像大小
 
 # 2. 車牌辨 @
@@ -50,9 +50,18 @@ for box in boxes_list.xyxy:
     cur_text = re.sub(r'[^\w\d]', '', cur_text) # 將不是 w (文字)、 d (數字) 取代成 ""，也就是沒東西
 
     # 顯示數字、並在原圖畫出框
-    color = (227, 114, 100)
-    cv2.putText(plate_img, cur_text, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
-    cv2.rectangle(plate_img, (x1, y1), (x2, y2), color, 3)
+    text_color = (255, 255, 255) # 文字顏色
+    background_color = (200, 10, 10) # 框框顏色
+
+    # 獲取文字尺寸
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    font_scale = 0.7
+    thickness = 2
+    (text_width, text_height), baseline = cv2.getTextSize(cur_text, font, font_scale, thickness)
+
+    cv2.rectangle(plate_img, (x1, y1 - text_height - 15), (x1 + text_width, y1 + baseline - 10), background_color, -1)
+    cv2.putText(plate_img, cur_text, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color, thickness)
+    cv2.rectangle(plate_img, (x1, y1), (x2, y2), background_color, 3) # 框起車牌的 bbox
 
 
 # 7. 顯示結果
