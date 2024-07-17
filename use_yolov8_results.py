@@ -50,8 +50,8 @@ for box in boxes_list.xyxy:
     cur_text = re.sub(r'[^\w\d]', '', cur_text) # 將不是 w (文字)、 d (數字) 取代成 ""，也就是沒東西
 
     # 顯示數字、並在原圖畫出框
-    text_color = (255, 255, 255) # 文字顏色
-    background_color = (200, 10, 10) # 框框顏色
+    text_color = (200, 200, 200) # 文字顏色
+    background_color = (210, 0, 111) # 框框顏色
 
     # 獲取文字尺寸
     font = cv2.FONT_HERSHEY_SIMPLEX
