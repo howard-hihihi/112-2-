@@ -1,5 +1,6 @@
 import cv2
 import pytesseract
+import re
 
 def find_plate_contour(org_img, canny_img):
     contours, hierarchy = cv2.findContours(canny_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -12,10 +13,10 @@ def find_plate_contour(org_img, canny_img):
         weight = rect[2]
         height = rect[3]
         if weight / height > 4:
-            crop_img = org_img[y:y+height, x:x+weight]
+            crop_img = org_img[y:y+height, x:x+weight] # 第 6. 切割
             cv2.rectangle(org_img, (x, y), (x+weight, y+height), (0, 0, 255), 3)
             break
-    return org_img, crop_img
+    return org_img, crop_img, x, y
 
 
 # 1. 讀取圖片，並且轉成使用灰階讀取
@@ -32,16 +33,20 @@ blur_plate_img = cv2.GaussianBlur(gray_plate_img, (19, 19), 0) # {高斯濾波}�
 canny_plate_img = cv2.Canny(blur_plate_img, 50, 150) # 數字範圍都是 0 ~ 255
 
 # 4. 找出車牌輪廓、5. 切割車牌出來
-plate_img, crop_img =  find_plate_contour(plate_img, canny_plate_img)
+plate_img, crop_img, x, y =  find_plate_contour(plate_img, canny_plate_img)
 
 # 6. 對切割出來的照片進行辨識
 text = pytesseract.image_to_string(crop_img, config='--psm 11')
+text = re.sub(r'[^\w\d]', '', text)
 print("## plate number:", text)
+
+# 7. 顯示車牌號碼在原圖
+cv2.putText(plate_img, text, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
 
 cv2.imshow("plate", plate_img)
-cv2.imshow("blur plate", blur_plate_img)
-cv2.imshow("canny plate", canny_plate_img)
-cv2.imshow("crop plate", crop_img)
+# cv2.imshow("blur plate", blur_plate_img)
+# cv2.imshow("canny plate", canny_plate_img)
+# cv2.imshow("crop plate", crop_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
