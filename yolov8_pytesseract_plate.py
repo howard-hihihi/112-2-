@@ -21,7 +21,7 @@ new_width = width
 new_height = height
 plate_img = cv2.resize(plate_img, (new_width, new_height)) # 調整圖像大小
 
-# 2. 車牌辨 @
+# 2. 車牌辨識 @
 model = YOLO("weights/plate.pt")
 results = model(plate_img, conf=0.05)
 res = results[0] # results 裡面放了很多張照片的預測結果，但因為這邊只有一張，所以如果 results[1] 就會出錯
